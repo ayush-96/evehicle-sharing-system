@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --aquamarine: #7fffd4;
+        }
+
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            width: 250px;
+            /* Adjusted width */
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding-top: 56px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 1030;
+        }
+
+        .profile-card {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-select option {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: #81f0b7;
+            color: black;
+        }
+
+        .form-group input,
+        .form-group select {
+            margin-top: 0.5rem;
+        }
+    </style>
+    <script>
+        function previewImage(event) {
+            const imagePreview = document.getElementById('imagePreview');
+            const preview = document.getElementById('preview');
+
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block'; 
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function removeImage() {
+            const fileInput = document.getElementById('profilePicture');
+            const imagePreview = document.getElementById('imagePreview');
+            const preview = document.getElementById('preview');
+
+            // Clear the file input
+            fileInput.value = '';
+
+            // Hide the preview and clear the src
+            imagePreview.style.display = 'none';
+            preview.src = '';
+        }
+    </script>
+</head>
+
+<body>
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow"
+        style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh;">
+        <div class="position-sticky">
+            <a href="Settings.html" class="navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-gear" style="font-size: 1.5rem; color: rgb(255, 255, 255);"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold">Settings</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/home/Settings/" class="nav-link active" aria-current="page">
+                            <i class="bi bi-person-lines-fill"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/home/Privacy/" class="nav-link text-white">
+                            <i class="bi bi-shield-check"></i>
+                            Privacy and Security
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/home/Notifications/" class="nav-link text-white">
+                            <i class="bi bi-bell-fill"></i>
+                            Notifications
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li>
+                        <a class="nav-link" href="/home/UserHomePage/">
+                            UserHomePage
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Profile Settings</h1>
+            </div>
+            <div class="card-body profile-card">
+                <form onsubmit="return false;">
+                    <div class="form-group">
+                        <label for="firstName"><strong>First Name</strong></label>
+                        <input type="text" class="form-control" id="firstName" placeholder="Enter your first name">
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName"><strong>Last Name</strong></label>
+                        <input type="text" class="form-control" id="lastName" placeholder="Enter your last name">
+                    </div>
+                    <div class="form-group">
+                        <label for="username"><strong>Username</strong></label>
+                        <input type="text" class="form-control" id="username" placeholder="Enter your username">
+                    </div>
+                    <div class="form-group">
+                        <label for="role"><strong>Role</strong></label>
+                        <select class="form-select" id="role" aria-label="Choose your Role">
+                            <option selected value="" disabled>Choose your Role</option>
+                            <option value="customer">Customer</option>
+                            <option value="manager">Manager</option>
+                            <option value="operator">Operator</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><strong>Email Address</strong></label>
+                        <input type="email" class="form-control" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="profilePicture"><strong>Profile Picture</strong></label>
+                        <input type="file" class="form-control" id="profilePicture" accept="image/*"
+                            onchange="previewImage(event)">
+                        <div class="mt-2" id="imagePreview" style="display: none;">
+                            <img id="preview" src="" alt="Image Preview" class="img-fluid"
+                                style="max-width: 200px; margin-top: 10px;">
+                            <button type="button" class="btn btn-danger mt-2" onclick="removeImage()">Remove</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

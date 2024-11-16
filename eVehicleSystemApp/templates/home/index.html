@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Group 5 Project</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    
+    <!-- 引入 Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+  </head>
+  
+
+  <style>
+    
+        body {
+        font-family: 'Afacad Flux', sans-serif; /* 应用全局字体 */
+        }
+        
+        svg {
+        fill: currentColor;
+        }
+
+        .flipPreview {
+        animation-name: flip;
+        animation-duration: 1s;
+        animation-delay: 3s;
+        animation-timing-function: ease;
+        animation-iteration-count: 2;
+        animation-direction: alternate;
+        }
+
+        @keyframes flip {
+        from {transform: rotateY(0deg);}
+        to {transform: rotateY(180deg);}
+        }
+        .flip-container {
+        width: 100%;
+        height: 300px;
+        
+        .card {
+            width: 100%;
+            height: 100%;
+        }
+        }
+
+        .flip-container {
+        perspective: 1000px;
+        
+        &:hover .flip {
+            transform: rotateY(180deg);
+        }
+        
+        .flip {
+            width: 100%;
+            height: 100%;
+        }
+        
+        .flip {
+            transition: 0.6s;
+            transform-style: preserve-3d;
+            position: relative;
+
+            .flip-front {
+            z-index: 2;
+            transform: rotateY(0deg);
+            }
+
+            .flip-back {
+            transform: rotateY(180deg);
+            }
+
+            .flip-front,
+            .flip-back {
+            backface-visibility: hidden;
+            position: absolute;
+            top: 0;
+            left: 0;
+            will-change: transform;
+            }
+        }
+        }
+        .home-title {
+            font-weight: 500;
+        }
+        .special-title {
+            font-family: 'Caveat', sans-serif; 
+            font-size: 2rem;
+        }
+        .letter-spacing {
+        letter-spacing: 2px; /* 调整字间距 */
+        font-weight: 300;
+    }
+        /* SVG 波浪样式 */
+        .wave {
+        width: 100%; /* 填充整个宽度 */
+        height: 50vh; /* 高度自适应 */
+        position: absolute; /* 绝对定位 */
+        bottom: 90px; /* 靠底部对齐 */
+        left: 0; /* 靠左侧对齐 */
+        z-index: 0;
+        }
+        .layer {
+            z-index: 1;
+            position: relative;
+        }
+        .rectangle {
+            background-color: #f3f4f5; /* 与波浪相同的颜色 */
+            height: 20vh; /* 矩形高度， 可以根据需要调整 */
+            width: 100%; /* 填充整个宽度 */
+            position: absolute; /* 绝对定位 */
+            bottom: 0; /* 靠底部对齐 */
+            left: 0; /* 靠左侧对齐 */
+            z-index: 0; /* 确保它在 SVG 之下 */
+        }
+
+       
+  </style>
+  
+  <body >
+    
+    <!--Navbar -->
+    <nav class="navbar navbar-expand-md bg-dark navebar-dark shadow fixed-top">
+        <div class="container">
+            <!--title -->
+        <a href="https://stgit.dcs.gla.ac.uk/programming-and-systems-development-m/2024/lb02-05/evehicle-share-system" class="navbar-brand" style="color: white;">
+            <i class="bi bi-github" style="font-size: 1.5rem; color: aquamarine;" >
+            </i>
+            Shared <span style="color: aquamarine;">E</span>-Vehicle System
+        </a>
+        <!--collapse button -->
+        <button class="navbar-toggler bg-success-subtle border border-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Tog  gle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+      <!--collapse content -->
+        <div class="collapse navbar-collapse" id="navbarNav" >
+           <ul class="navbar-nav ms-auto" >
+            <li class="nav-item">
+                <a href="/home/UserLogin/" class="nav-link " style="color: aquamarine;">User Login</a></li>
+            <li class="nav-item">
+                <a href="/home/StaffLogin/" class="nav-link text-secondary">Staff Login</a></li>
+            <li class="nav-item">
+                <a href="/home/AboutUs/" class="nav-link text-secondary">About Us</a></li>
+           </ul>
+        </div>
+        
+        
+        
+    </div>
+    </nav>
+    
+    <section class="p-5 mt-3" style="background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;position: relative;">
+        <div class="container layer" >
+            <div class="flex-column justify-content-center align-items-center p-4">
+                
+                    <h1 class="text-center text-white display-2 home-title pt-5 pb-3" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);">
+                        Welcome to the Shared E-Vehicle System
+                    </h1>
+            <br><br><br><br>
+
+            <div class="d-flex flex-column my-3 justify-content-center align-items-center p-5 layer pb-5">
+                <a href="/home/UserRegistration/">
+                    <button class="btn btn-success btn-lg" style="color: aquamarine;">
+                        Register
+                    </button>
+                </a>
+                <p class="pt-5 pb-3 special-title text-center">for an enjoyable eco-friendly journey</p>
+            </div>        
+                   
+                
+                
+                
+            </div>
+            
+        </div>
+        
+        
+        <svg class="wave" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#f3f4f5" fill-opacity="1" d="M0,192L48,208C96,224,192,256,288,224C384,192,480,96,576,53.3C672,11,768,21,864,48C960,75,1056,117,1152,122.7C1248,128,1344,96,1392,80L1440,64L1440,800L0,800Z"></path>
+        </svg>
+        
+        <div class="rectangle"></div>
+        
+    </section>
+    
+<section class="pb-5" style="background-color: #b3ffe4;">
+    <div class="container-fluid pb-5 pt-5">
+        <div class="row justify-content-center text-center hero-section pt-5 pb-2">
+            <div class="col-md-8">
+                <h1 class="display-4 hero-title">
+                    Discover the Exciting World of 
+                    <span class="text-success font-weight-bold">E-Bikes</span>!
+                </h1>
+                <p class="lead hero-subtitle">
+                    Join us as we explore the <span class="font-italic">diverse</span> and <span class="font-italic">innovative</span> types of 
+                    <span class="text-success">e-bikes</span> that are transforming the way we ride.
+                </p>
+            </div>
+        </div>
+        <div class="row pt-5">
+          <div class="col-6 col-lg-3 mb-4">
+            <div class="flip-container">
+              <div class="flip flipPreview">
+                <div class="card bg-primary text-white text-center flip-front shadow-lg" style="background-image: url('https://i.pinimg.com/564x/fb/fb/4d/fbfb4d17c8136c3771c908bc5ce4dbbb.jpg'); background-size: cover; background-position: bottom;">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <p>
+                     
+                    </p>
+                    <h1 class="card-title">Cycle</h1>
+                  </div>
+                </div>
+      
+                <div class="card text-center flip-back shadow-lg" style="background-color: #84faaf9a;">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <h5 class="card-title">Cycle</h5>
+                    <p class="card-text">Experience smooth, eco-friendly rides ideal for urban commuting. Built for comfort and efficiency.</p>
+                    <div>
+                      <a href="#" class="btn btn-outline-secondary">Read more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3 mb-4">
+            <div class="flip-container">
+              <div class="flip">
+                <div class="card bg-primary text-white text-center flip-front shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1450644995374-1721affb8ecd?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: bottom;">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <p>
+                      
+                    </p>
+                    <h1 class="card-title">Skateboard</h1>
+                  </div>
+                </div>
+      
+                <div class="card text-center flip-back">
+                  <div class="card-body d-flex flex-column justify-content-center"style="background-color: #9de0d3;">
+                    <h5 class="card-title">Skateboard</h5>
+                    <p class="card-text">Compact and fun for quick trips. Perfect for zipping through the city with style and ease.</p>
+                    <div>
+                      <a href="#" class="btn btn-outline-secondary">Read more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3 mb-4">
+            <div class="flip-container">
+              <div class="flip">
+                <div class="card bg-primary text-white text-center flip-front shadow-lg" style="background-image: url('https://images.unsplash.com/photo-1531327431456-837da4b1d562?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center;">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <p>
+                      
+                    </p>
+                    <h1 class="card-title">Bike</h1>
+                  </div>
+                </div>
+      
+                <div class="card text-center flip-back">
+                    <div class="card-body d-flex flex-column justify-content-center"style="background-color: #b0e0f4;">
+                        <h5 class="card-title">Skateboard</h5>
+                        <p class="card-text">Effortless travel at your fingertips. Lightweight and great for short-distance travel.</p>
+                    <div>
+                      <a href="#" class="btn btn-outline-secondary">Read more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 col-lg-3 mb-4">
+            <div class="flip-container">
+              <div class="flip">
+                <div class="card bg-primary text-white text-center flip-front shadow-lg" style="background-image: url('https://assets.aboutamazon.com/dims4/default/dc56e03/2147483647/strip/true/crop/5205x2930+0+119/resize/2480x1396!/format/webp/quality/90/?url=https%3A%2F%2Famazon-blogs-brightspot.s3.amazonaws.com%2F52%2Fe0%2F7a6ff87e466280462e131697d1d0%2Famazon-28.jpg'); background-size: cover; background-position: center;">
+                  <div class="card-body d-flex flex-column justify-content-center">
+                    <p>
+                     
+                    </p>
+                    <h1 class="card-title ">Delivery
+
+                    </h1>
+                  </div>
+                </div>
+      
+                <div class="card text-center flip-back">
+                    <div class="card-body d-flex flex-column justify-content-center"style="background-color:#8fd3f4;">
+                        <h5 class="card-title">Car</h5>
+                        <p class="card-text">Reliable and spacious, suitable for longer rides and carrying larger loads. Comfort meets convenience.</p>
+                    <div>
+                      <a href="#" class="btn btn-outline-secondary">Read more</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</section>
+
+<!-- Footer Block Start -->
+<footer id="site-footer">
+    <div class="bg-success bg-opacity-25 py-5">
+        <div class="container py-3">
+            <div class="row">
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="pb-3"><i class="fa-solid fa-user-group pe-1"></i> About us</h5>
+                    <span class="text-secondary">LB02-05</span>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="pb-3"><i class="fa-solid fa-link pe-1"></i> Important links</h5>
+                    <ul>
+                        <li><a href="/home/AboutUs/" class="text-decoration-none link-secondary">About us</a></li>
+                        <li><a href="#" class="text-decoration-none link-secondary">Gitlab Link</a></li>
+                        <li><a href="#" class="text-decoration-none link-secondary">Video Link</a></li>
+                    </ul>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="pb-3"><i class="fa-solid fa-location-dot pe-1"></i> Our location</h5>
+                    <span class="text-secondary">
+                        University of Glasgow<br>
+                        G12 8QQ<br>
+                        Programming and Systems Development<br>
+                    </span>
+                </div>
+                <div class="col-xl-3 col-md-6 col-sm-12">
+                    <h5 class="pb-3"><i class="fa-solid fa-paper-plane pe-1"></i> Stay updated</h5>
+                    <form>
+                        <input type="text" class="w-100 mb-2 form-control" name="" placeholder="Email ID">
+                        <button class="w-100 btn btn-dark">Subscribe now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-dark py-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <ul class="list-inline mb-0">
+                        <li class="list-inline-item"><a class="btn btn-outline-secondary" href="#"><i class="bi bi-facebook"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-secondary" href="#"><i class="bi bi-youtube"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-secondary" href="#"><i class="bi bi-twitter"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-secondary" href="#"><i class="bi bi-linkedin"></i></a></li>
+                        <li class="list-inline-item"><a class="btn btn-outline-secondary" href="#"><i class="bi bi-github"></i></a></li>
+                    </ul>
+                </div>
+                <div class="col-md-6 col-sm-12"><span class="text-secondary pt-1 float-md-end float-sm-start">Copyright &copy; 2024</span></div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- Footer Block Start -->
+
+
+
+    
+    
+
+
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

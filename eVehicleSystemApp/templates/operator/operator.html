@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Operator Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --aquamarine: #7fffd4;
+        }
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+        .text-aquamarine {
+            color: var(--aquamarine) !important;
+        }
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+        .sidebar {
+            min-height: 100vh;
+            width: 300px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px; /* 导航栏的高度 */
+        }
+        .main-content {
+            margin-left: 350px; /* 侧边栏的宽度 */
+            padding-top: 56px; /* 导航栏的高度 */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 300px; /* 侧边栏的宽度 */
+            z-index: 1030;
+        }
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <main class="main-content">
+    <!-- sidebar -->
+    <form method="POST" action="/operator/operator/">
+        {% csrf_token %}
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow" style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;">
+        <div class="position-sticky">
+            <a href="/home/manager_dashboard/" class="navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-kanban" style="font-size: 1.5rem; color: rgb(255, 255, 255);"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold">Dashboard</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <!-- <li class="nav-item">
+                        <a href="#" class="nav-link active" aria-current="page">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            General
+                        </a>
+                    </li> -->
+                    <li>
+                        <button name="charge" value="charge" class="nav-link text-white" id="chargeButton">
+                            <i class="bi bi-lightning-charge me-2"></i>
+                            Charge
+                        </button>
+                    </li>
+                    <li>
+                        <button name="repair" value="repair" class="nav-link text-white" id="repairButton">
+                            <i class="bi bi-tools me-2"></i>
+                            Repair
+                        </button>
+                    </li>
+                    <li>
+                        <div>
+                            <p>Select location to move:</p>
+                            <!-- <label for="location" class="form-label">Select Location to move</label> -->
+                            <select name="location" class="form-select custom-select" id="location">
+                                <option selected>Select a postal code</option>
+                                <option value="G1">G1 - Glasgow City Centre - Merchant City</option>
+                                <option value="G2">G2 - Glasgow City Centre - Financial District</option>
+                                <option value="G3">G3 - Charing Cross, Anderston, Finnieston, Yorkhill</option>
+                                <option value="G4">G4 - Glasgow Cathedral, Townhead, Cowcaddens</option>
+                                <option value="G11">G11 - Partick, Thornwood</option>
+                                <option value="G12">G12 - Hillhead, Dowanhill, University of Glasgow</option>
+                                <option value="G13">G13 - Anniesland, Jordanhill</option>
+                                <option value="G14">G14 - Whiteinch, Scotstoun</option>
+                                <option value="G20">G20 - Maryhill, North Kelvinside</option>
+                                <option value="G41">G41 - Pollokshields, Strathbungo, Shawlands</option>
+                                <option value="G42">G42 - Govanhill, Battlefield</option>
+                                <option value="G43">G43 - Pollokshaws, Auldhouse</option>
+                                <option value="G44">G44 - Cathcart, Mount Florida</option>
+                                <option value="G51">G51 - Govan, Ibrox</option>
+                                <option value="G52">G52 - Cardonald, Hillington</option>
+                                <option value="G31">G31 - Dennistoun, Haghill</option>
+                                <option value="G32">G32 - Carmyle, Mount Vernon</option>
+                                <option value="G40">G40 - Bridgeton, Dalmarnock</option>
+                                <option value="G21">G21 - Springburn, Sighthill</option>
+                                <option value="G22">G22 - Possilpark, Parkhouse</option>
+                                <option value="G61">G61 - Bearsden</option>
+                                <option value="G62">G62 - Milngavie</option>
+                                <option value="G64">G64 - Bishopbriggs</option>
+                                <option value="G71">G71 - Uddingston</option>
+                                <option value="G72">G72 - Cambuslang</option>
+                                <option value="G73">G73 - Rutherglen</option>
+                                <option value="G74">G74 - East Kilbride</option>
+                                <option value="G76">G76 - Clarkston, Busby</option>
+                            </select>
+                        </div>
+                    </li>
+                    <li>
+                        <button name="move" value="move" class="nav-link text-white">
+                            <i class="bi bi-truck me-2"></i>
+                            Move 
+                        </button>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- User Info Button (offcanvas trigger) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Operator: {{operator_name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/home/StaffLogin/">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <!-- <main class="main-content"> -->
+        <div class="container-fluid">
+            <!-- dashboard -->
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Operator Dashboard</h1>
+            </div>
+
+            <!-- card -->
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-aquamarine text-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">No. of vehicle charged</h5>
+                            <p class="card-text display-4">{{vehicle_charged}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-aquamarine text-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">No. of vehicle repaired</h5>
+                            <p class="card-text display-4">{{vehicle_repair}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <div class="card bg-aquamarine text-dark">
+                        <div class="card-body">
+                            <h5 class="card-title">No. of vehicle moved</h5>
+                            <p class="card-text display-4">{{vehicle_moved}}</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- card -->
+            </div>
+
+            <!-- chart -->
+            
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header bg-aquamarine">
+                                Charts
+                            </div>
+                            <div class="card-body">
+                            {% block content %}
+                        
+                                <!-- table -->
+                                <table class="table table-striped" id="vdata">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"><input type="checkbox" id="selectAll"></th>
+                                            <th scope="col">Vehicle ID</th>
+                                            <th scope="col">quantity of electricity</th>
+                                            <th scope="col">maintenance</th>
+                                            <th scope="col">Location</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for vdetail in vdetails %}
+                                        <tr>
+                                            <td><input name="vselect" value="{{vdetail.id}}" type="checkbox" class="vehicle-checkbox"></td>
+                                            <td>{{vdetail.id}}</td>
+                                            <td class="electricity">{{vdetail.charge}}</td>
+                                            <td>{{vdetail.repair_status}}</td>
+                                            <td>{{vdetail.current_loc}}</td>
+                                        </tr>
+                                        {% endfor %}      
+                                    </tbody>
+                                </table>
+                        
+                            {% endblock content %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 新增按钮 -->
+                <!-- <form method="POST" action="/operator/operator/">
+                    {% csrf_token %} -->
+                <!-- <div class="button-group">
+                    <button name="charge" value="charge" class="btn btn-aquamarine me-2" id="chargeButton">Charge</button>
+                    <button name="repair" value="repair" class="btn btn-aquamarine me-2" id="repairButton">Repair</button>
+                    <div>
+                        
+                        <select name="location" class="form-select custom-select" id="location">
+                            <option selected>Select a postal code</option>
+                            <option value="G1">G1 - Glasgow City Centre - Merchant City</option>
+                            <option value="G2">G2 - Glasgow City Centre - Financial District</option>
+                            <option value="G3">G3 - Charing Cross, Anderston, Finnieston, Yorkhill</option>
+                            <option value="G4">G4 - Glasgow Cathedral, Townhead, Cowcaddens</option>
+                            <option value="G11">G11 - Partick, Thornwood</option>
+                            <option value="G12">G12 - Hillhead, Dowanhill, University of Glasgow</option>
+                            <option value="G13">G13 - Anniesland, Jordanhill</option>
+                            <option value="G14">G14 - Whiteinch, Scotstoun</option>
+                            <option value="G20">G20 - Maryhill, North Kelvinside</option>
+                            <option value="G41">G41 - Pollokshields, Strathbungo, Shawlands</option>
+                            <option value="G42">G42 - Govanhill, Battlefield</option>
+                            <option value="G43">G43 - Pollokshaws, Auldhouse</option>
+                            <option value="G44">G44 - Cathcart, Mount Florida</option>
+                            <option value="G51">G51 - Govan, Ibrox</option>
+                            <option value="G52">G52 - Cardonald, Hillington</option>
+                            <option value="G31">G31 - Dennistoun, Haghill</option>
+                            <option value="G32">G32 - Carmyle, Mount Vernon</option>
+                            <option value="G40">G40 - Bridgeton, Dalmarnock</option>
+                            <option value="G21">G21 - Springburn, Sighthill</option>
+                            <option value="G22">G22 - Possilpark, Parkhouse</option>
+                            <option value="G61">G61 - Bearsden</option>
+                            <option value="G62">G62 - Milngavie</option>
+                            <option value="G64">G64 - Bishopbriggs</option>
+                            <option value="G71">G71 - Uddingston</option>
+                            <option value="G72">G72 - Cambuslang</option>
+                            <option value="G73">G73 - Rutherglen</option>
+                            <option value="G74">G74 - East Kilbride</option>
+                            <option value="G76">G76 - Clarkston, Busby</option>
+                        </select>
+                    </div>
+                    <button name="move" value="move" class="btn btn-aquamarine">Move</button>
+                </div> -->
+            </form>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('chargeButton').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.vehicle-checkbox:checked');
+            checkboxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                const electricityCell = row.querySelector('.electricity');
+                electricityCell.textContent = '100%';
+            });
+        });
+
+        document.getElementById('repairButton').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.vehicle-checkbox:checked');
+            checkboxes.forEach(checkbox => {
+                const row = checkbox.closest('tr');
+                const maintenanceCell = row.querySelector('td:nth-child(4)');
+                maintenanceCell.textContent = 'Yes';
+            });
+        });
+
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.vehicle-checkbox');
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+            });
+        });
+    </script>
+    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+        function GetSelected() {
+            //Reference the Table.
+            var grid = document.getElementById("vdata");
+     
+            //Reference the CheckBoxes in Table.
+            var checkBoxes = grid.getElementsByTagName("INPUT");
+            var message = "Below vehicle(s) is(are) plugged to charge\n";
+     
+            //Loop through the CheckBoxes.
+            for (var i = 0; i < checkBoxes.length; i++) {
+                if (checkBoxes[i].checked) {
+                    var row = checkBoxes[i].parentNode.parentNode;
+                    message += row.cells[1].innerHTML;
+                    message += "\n";
+                }
+            }
+     
+            //Display selected Row data in Alert Box.
+            alert(message);
+            //document.getElementById("facialImage").value = message
+            // $.ajax({
+            //     url:"operator/operator/",
+            //     type:"POST",
+            //     contentType: "application/json",
+            //     data: JSON.stringify(s)
+            // });
+            }
+    </script> -->
+</body>
+</html>

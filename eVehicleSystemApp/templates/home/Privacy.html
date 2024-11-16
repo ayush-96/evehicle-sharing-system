@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy and Security</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --aquamarine: #7fffd4;
+        }
+
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+
+        .sidebar {
+            min-height: 100vh;
+            width: 250px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px;
+        }
+
+        .main-content {
+            margin-left: 300px;
+            padding-top: 56px;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 250px;
+            z-index: 1030;
+        }
+
+        .profile-card {
+            margin: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .form-group input,
+        .form-group select {
+            margin-top: 0.5rem;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--aquamarine);
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow"
+        style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh;">
+        <div class="position-sticky">
+            <a href="/home/Privacy/" class="navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-gear" style="font-size: 1.5rem; color: rgb(255, 255, 255);"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold">Settings</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/home/Settings/" class="nav-link text-white">
+                            <i class="bi bi-person-lines-fill"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/home/Privacy/" class="nav-link active" aria-current="page">
+                            <i class="bi bi-shield-check"></i>
+                            Privacy and Security
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/home/Notifications/" class="nav-link text-white">
+                            <i class="bi bi-bell-fill"></i>
+                            Notifications
+                        </a>
+                    </li>
+                </ul>
+            </ul>
+        </div>
+    </nav>
+
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li>
+                        <a class="nav-link" href="/home/UserHomePage/">
+                            UserHomePage
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Privacy and Security Settings</h1>
+            </div>
+            <div class="card-body profile-card">
+                <form onsubmit="return false;"> 
+                    <div class="form-group">
+                        <label for="twoFactor"><strong>Two-Factor Authentication</strong></label>
+                        <select class="form-select" id="twoFactor" aria-label="Enable Two-Factor Authentication">
+                            <option selected value="">Choose an option</option>
+                            <option value="enabled">Enabled</option>
+                            <option value="disabled">Disabled</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><strong>Change Password</strong></label>
+                        <input type="password" class="form-control" id="password" placeholder="Enter new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword"><strong>Confirm New Password</strong></label>
+                        <input type="password" class="form-control" id="confirmPassword"
+                            placeholder="Confirm new password">
+                    </div>
+                    <div class="form-group">
+                        <label for="cookies"><strong>Cookie Preferences</strong></label>
+                        <select class="form-select" id="cookies" aria-label="Cookie Preferences">
+                            <option selected value="">Choose your cookie preferences</option>
+                            <option value="accept">Accept All Cookies</option>
+                            <option value="essential">Essential Cookies Only</option>
+                            <option value="reject">Reject All Cookies</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="dataDownload"><strong>Download Your Data</strong></label>
+                        <button type="button" class="btn btn-primary"
+                            onclick="alert('Download started!')">Download</button>
+                    </div>
+                    <div class="form-group">
+                        <label for="dataDeletion"><strong>Account Deletion</strong></label>
+                        <button type="button" class="btn btn-danger"
+                            onclick="confirm('Are you sure you want to delete your account? This action cannot be undone.')">Delete Account</button>
+                    </div>
+                    <button type="submit" class="btn btn-primary" onclick="alert('Saved Changes Successfully!')">Save
+                        Changes</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

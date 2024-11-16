@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --aquamarine: #7fffd4;
+        }
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+        .text-aquamarine {
+            color: var(--aquamarine) !important;
+        }
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+        .sidebar {
+            
+            min-height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px; /* 导航栏的高度 */
+        }
+        .main-content {
+            margin-left: 250px; /* 侧边栏的宽度 */
+            padding-top: 56px; /* 导航栏的高度 */
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 200px; /* 侧边栏的宽度 */
+            z-index: 1030;
+        }
+    </style>
+</head>
+<body>
+    <!-- sidebar -->
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow" style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;">
+        <div class="position-sticky">
+            
+            
+            <a href="/manager/manager_dashboard/" class=" navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-kanban" style="font-size: 1.5rem; color: rgb(255, 255, 255);" ></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold ">Dashborad</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/manager/manager_dashboard/" class="nav-link active " aria-current="page">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            General
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/User/" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i>
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Location/" class="nav-link text-white">
+                            <i class="bi bi-ev-station me-2"></i>
+                            Location
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Vehicles/" class="nav-link text-white">
+                            <i class="bi bi-ev-front me-2"></i>
+                            Vehicles
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="bi bi-gear me-2"></i>
+                            Setting
+                        </a>
+                    </li> -->
+                </ul>
+                <!-- 添加更多菜单项 -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- User Info Button (offcanvas trigger) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Manager: {{manager_name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/home/StaffLogin/">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- dashboard -->
+            <div class="d-flex justify-content-between align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">General</h1>
+                <a href="/manager/manager_dashboard/" class="btn btn-aquamarine ">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </a>
+            </div>
+
+            <!-- card -->
+            <div class="row d-flex align-items-stretch">
+             <div class="col-md-8 ">
+                <div class="row flex-grow-1">
+                    <div class="col-md-6 mb-4">
+                        <div class="card bg-aquamarine text-dark shadow h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Users</h5>
+                                <p class="card-text display-4">{{ruser}}</p>
+                                <!-- <p class="card-text display-4">Active Users : {{auser}}</p> -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-4">
+                        <div class="card bg-white text-dark shadow h-100">
+                            <div class="card-body">
+                                <h5 class="card-title">Vehicles</h5>
+                                <p class="card-text display-4">{{tvehicle}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-12 mb-4">
+                        <div class="card shadow">
+                            <div class="card-header bg-aquamarine h-100">
+                                Charts
+                            </div>
+                            <div class="card-body">
+                                <canvas id="bikeUsageChart" width="400" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+    
+                    
+                </div>
+
+            </div>
+            
+            <div class="col-md-4 mb-4 d-flex">
+                <div class="card bg-light text-dark shadow h-100">
+                    <div class="card-header bg-aquamarine ">
+                        Charts
+                    </div>
+                    <div class="card-body">
+                        <canvas id="horizontalBarChart" width="300" height="500"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--chart -->
+            
+        </div>
+    
+        <script>
+             window.addEventListener('resize', function() {
+                location.reload();
+            });
+            
+            const ctx = document.getElementById('bikeUsageChart').getContext('2d');
+            const bikeUsageChart = new Chart(ctx, {
+                type: 'line', // 使用折线图
+                data: {
+                    labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], // X轴标签
+                    datasets: [
+            {
+                label: 'Number of Bike Uses',
+                data: JSON.parse("{{bike|escapejs}}"), // 示例数据
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: 'Number of Cycle Uses',
+                data: JSON.parse("{{cycle|escapejs}}"), // 示例数据
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: 'Number of Skateboard Uses',
+                data: JSON.parse("{{skateboard|escapejs}}"), // 示例数据
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            },
+            {
+                label: 'Number of Delivery Uses',
+                data: JSON.parse("{{delivery|escapejs}}"), // 示例数据
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(255, 206, 86, 1)',
+                borderWidth: 2,
+                fill: true,
+                tension: 0.4
+            }
+
+        ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            
+             // 初始化水平条形图
+                    const ctxHorizontal = document.getElementById('horizontalBarChart').getContext('2d');
+            const horizontalBarChart = new Chart(ctxHorizontal, {
+                type: 'bar',
+                data: {
+                labels: JSON.parse("{{location_name|escapejs}}"), // 添加更多的格拉斯哥地区
+                datasets: [{
+                    label: 'Number of vehicles per location',
+                    data: JSON.parse("{{location_count|escapejs}}"), // 为每个地区添加自行车数量
+                    backgroundColor: [
+                'rgba(132, 250, 176, 0.6)', // #84fab0
+                'rgba(143, 211, 244, 0.6)', // #8fd3f4
+                'rgba(132, 250, 176, 0.4)', // 变体
+                'rgba(143, 211, 244, 0.4)', // 变体
+                'rgba(132, 250, 176, 0.2)', // 变体
+                'rgba(143, 211, 244, 0.2)', // 变体
+                'rgba(132, 250, 176, 0.8)'  // 变体
+            ],
+            borderColor: [
+                'rgba(132, 250, 176, 1)', // #84fab0
+                'rgba(143, 211, 244, 1)', // #8fd3f4
+                'rgba(132, 250, 176, 1)', // 变体
+                'rgba(143, 211, 244, 1)', // 变体
+                'rgba(132, 250, 176, 1)', // 变体
+                'rgba(143, 211, 244, 1)', // 变体
+                'rgba(132, 250, 176, 1)'  // 变体
+            ],
+                    
+                   
+                   
+                    
+                    
+                    borderWidth: 1
+                        }]
+                    },
+                        options: {
+                    indexAxis: 'y',
+                    scales: {
+                        x: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true
+                        }
+                    },
+                    elements: {
+                        bar: {
+                            barThickness: 1 // 设置柱体的固定宽度
+                        }
+                    }
+                }
+            });
+        </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

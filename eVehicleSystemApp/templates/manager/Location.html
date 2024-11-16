@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Location</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --aquamarine: #7fffd4; 
+        }
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+        .text-aquamarine {
+            color: var(--aquamarine) !important;
+        }
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+        .sidebar {
+            
+            min-height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px; 
+        }
+        .main-content {
+            margin-left: 250px; 
+            padding-top: 56px; 
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 200px; 
+            z-index: 1030;
+        }
+        #reportImage {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <!-- sidebar -->
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow" style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;">
+        <div class="position-sticky">
+            
+            
+            <a href="/manager/manager_dashboard/" class=" navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-kanban" style="font-size: 1.5rem; color: rgb(255, 255, 255);" ></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold ">Dashborad</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/manager/manager_dashboard/" class="nav-link text-white " aria-current="page">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            General
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/User/" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i>
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Location/" class="nav-link  active">
+                            <i class="bi bi-ev-station me-2"></i>
+                            Location
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Vehicles/" class="nav-link text-white">
+                            <i class="bi bi-ev-front me-2"></i>
+                            Vehicles
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="bi bi-gear me-2"></i>
+                            Setting
+                        </a>
+                    </li> -->
+                </ul>
+                <!-- 添加更多菜单项 -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- User Info Button (offcanvas trigger) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Manager: {{manager_name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/home/StaffLogin/">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- dashboard -->
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Location</h1>
+                <a href="/manager/Location/" class="btn btn-aquamarine ">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </a>
+            </div>
+            
+            <div class="row d-flex align-items-stretch">
+                
+                <!-- User Age Pie Chart -->
+                <div class="col-md-8">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Active Vehicle Distribution by Postal Code
+                        </div>
+                        <div class="card-body">
+                            <canvas id="revenuebarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Vehicle Distribution by Postal Code Doughnut Chart -->
+                <div class="col-md-4">
+                    <div class="card mb-4 shadow h-100">
+                        <div class="card-header bg-aquamarine">
+                            Revenue by Postal Code
+                    </div>
+                    <div class="card-body">
+                        <canvas id="vehicleDoughnutChart"></canvas>
+                    </div>
+                    </div>
+                </div>
+               
+            
+    
+            
+
+            
+                
+                      
+        </div>
+    </main>
+
+
+    <script>
+
+            window.addEventListener('resize', function() {
+                            location.reload();
+                        });
+        // Revenue by Postal Code Bar Chart
+        // const revenueCtx = document.getElementById('revenueBarChart').getContext('2d');
+        // const revenueBarChart = new Chart(revenueCtx, {
+        //     type: 'bar',
+        //     data: {
+        //         labels: JSON.parse("{{rlocation|escapejs}}"), // 示例邮编
+        //         datasets: [{
+        //             label: 'Revenue (£)',
+        //     data: JSON.parse("{{lrevneue|escapejs}}"), // 对应的收益数据
+        //     backgroundColor: [
+        //         'rgba(75, 192, 192, 0.2)',
+        //         'rgba(54, 162, 235, 0.2)',
+        //         'rgba(255, 206, 86, 0.2)',
+        //         'rgba(75, 192, 192, 0.2)',
+        //         'rgba(153, 102, 255, 0.2)',
+        //         'rgba(255, 159, 64, 0.2)',
+        //         'rgba(255, 99, 132, 0.2)',
+        //         'rgba(54, 162, 235, 0.2)',
+        //         'rgba(75, 192, 192, 0.2)',
+        //         'rgba(153, 102, 255, 0.2)'
+        //     ],
+        //     borderColor: [
+        //         'rgba(75, 192, 192, 1)',
+        //         'rgba(54, 162, 235, 1)',
+        //         'rgba(255, 206, 86, 1)',
+        //         'rgba(75, 192, 192, 1)',
+        //         'rgba(153, 102, 255, 1)',
+        //         'rgba(255, 159, 64, 1)',
+        //         'rgba(255, 99, 132, 1)',
+        //         'rgba(54, 162, 235, 1)',
+        //         'rgba(75, 192, 192, 1)',
+        //         'rgba(153, 102, 255, 1)'
+        //     ],
+        //             borderWidth: 1
+        //         }]
+        //     },
+        //     options: {
+        //         responsive: true,
+        //         scales: {
+        //             y: {
+        //                 beginAtZero: true
+        //             }
+        //         }
+        //     }
+        // });
+
+         // Vehicle Distribution by Postal Code Doughnut Chart
+    const vehicleCtx = document.getElementById('vehicleDoughnutChart').getContext('2d');
+    const vehicleDoughnutChart = new Chart(vehicleCtx, {
+        type: 'doughnut',
+        data: {
+            labels: JSON.parse("{{rlocation|escapejs}}"), // 示例邮编
+            datasets: [{
+                label: 'Vehicle Distribution',
+                data: JSON.parse("{{lrevenue|escapejs}}"), // 示例数据
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'  ,
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+
+    const revenueCtx = document.getElementById('revenuebarChart').getContext('2d');
+    const revenuebarChart = new Chart(revenueCtx, {
+        type: 'bar',
+        data: {
+            labels: JSON.parse("{{location|escapejs}}"), // 示例邮编
+            datasets: [{
+                label: 'Vehicle Distribution',
+                data: JSON.parse("{{car_count|escapejs}}"), // 示例数据
+                backgroundColor: [
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)'  ,
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true
+        }
+    });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

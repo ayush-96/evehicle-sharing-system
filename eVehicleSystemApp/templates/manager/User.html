@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes"></script>
+    <script type="text/javascript" src="./js/Chart.js"></script>
+    <script type="text/javascript" src="./js/chartjs-plugin-colorschemes.js"></script>
+    <style>
+        :root {
+            --aquamarine: #7fffd4; 
+        }
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+        .text-aquamarine {
+            color: var(--aquamarine) !important;
+        }
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+        .sidebar {
+            
+            min-height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px; 
+        }
+        .main-content {
+            margin-left: 250px; 
+            padding-top: 56px; 
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 200px; 
+            z-index: 1030;
+        }
+        #reportImage {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <!-- sidebar -->
+    <!-- sidebar -->
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow" style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;">
+        <div class="position-sticky">
+            
+            
+            <a href="/manager/manager_dashboard/" class=" navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-kanban" style="font-size: 1.5rem; color: rgb(255, 255, 255);" ></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold ">Dashborad</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/manager/manager_dashboard/" class="nav-link text-white " aria-current="page">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            General
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/User/" class="nav-link active">
+                            <i class="bi bi-people me-2"></i>
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Location/" class="nav-link text-white">
+                            <i class="bi bi-ev-station me-2"></i>
+                            Location
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Vehicles/" class="nav-link text-white">
+                            <i class="bi bi-ev-front me-2"></i>
+                            Vehicles
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="bi bi-gear me-2"></i>
+                            Setting
+                        </a>
+                    </li> -->
+                </ul>
+                <!-- 添加更多菜单项 -->
+            </ul>
+        </div>
+    </nav>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- User Info Button (offcanvas trigger) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Manager: {{manager_name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/home/StaffLogin/">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <main class="main-content">
+        <div class="container-fluid ">
+            <!-- dashboard -->
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">User</h1>
+                <a href="/manager/User/" class="btn btn-aquamarine ">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </a>
+            </div>
+
+            <div class="row align-items-start d-flex">
+            <!-- User Age Pie Chart -->
+            <div class="col-md-4" >
+                <div class="card mb-4 shadow">
+                    <div class="card-header bg-aquamarine">
+                        Top user ID's revenue 
+                    </div>
+                    <div class="card-body">
+                        <canvas id="agePieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- User Count by Region Bar Chart -->
+                <div class="col-md-8 ">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Top user ID's total trips
+                        </div>
+                        <div class="card-body">
+                            <canvas id="total_tripsBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 " >
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Top user ID's defect reported 
+                        </div>
+                        <div class="card-body">
+                            <canvas id="reported_defectiveBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 " >
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Top user ID's payment due 
+                        </div>
+                        <div class="card-body">
+                            <canvas id="payment_duesBarChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <script>
+                window.addEventListener('resize', function() {
+                location.reload();
+            });
+                // User Age Pie Chart
+                const ageCtx = document.getElementById('agePieChart').getContext('2d');
+                const agePieChart = new Chart(ageCtx, {
+                    type: 'pie',
+                    data: {
+                        labels: JSON.parse("{{uid|escapejs}}"),
+                        datasets: [{
+                            data: JSON.parse("{{revenue|escapejs}}"), // 示例数据
+                            backgroundColor: [
+                    'rgba(132, 250, 176, 0.2)', // #84fab0
+                    'rgba(143, 211, 244, 0.2)', // #8fd3f4
+                    'rgba(132, 250, 176, 0.4)', // 变体
+                    'rgba(143, 211, 244, 0.4)', // 变体
+                    'rgba(132, 250, 176, 0.6)'  // 变体
+                ],
+                borderColor: [
+                    'rgba(132, 250, 176, 1)', // #84fab0
+                    'rgba(143, 211, 244, 1)', // #8fd3f4
+                    'rgba(132, 250, 176, 1)', // 变体
+                    'rgba(143, 211, 244, 1)', // 变体
+                    'rgba(132, 250, 176, 1)'  // 变体
+                ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true
+                    }
+                });
+        
+                // User Count by Region Bar Chart
+                const total_tripsCtx = document.getElementById('total_tripsBarChart').getContext('2d');
+                const total_tripsBarChart = new Chart(total_tripsCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: JSON.parse("{{tuid|escapejs}}"),
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: JSON.parse("{{trips|escapejs}}"), // 示例数据
+                            backgroundColor: [
+                    'rgba(132, 250, 176, 0.2)', // #84fab0
+                    'rgba(143, 211, 244, 0.2)', // #8fd3f4
+                    'rgba(132, 250, 176, 0.4)', // 变体
+                    'rgba(143, 211, 244, 0.4)', // 变体
+                    'rgba(132, 250, 176, 0.6)'  // 变体
+                ],
+                borderColor: [
+                    'rgba(132, 250, 176, 1)', // #84fab0
+                    'rgba(143, 211, 244, 1)', // #8fd3f4
+                    'rgba(132, 250, 176, 1)', // 变体
+                    'rgba(143, 211, 244, 1)', // 变体
+                    'rgba(132, 250, 176, 1)'  // 变体
+                ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const reported_defectiveCtx = document.getElementById('reported_defectiveBarChart').getContext('2d');
+                const reported_defectivenBarChart = new Chart(reported_defectiveCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: JSON.parse("{{duid|escapejs}}"),
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: JSON.parse("{{defective|escapejs}}"), // 示例数据
+                            backgroundColor: [
+                    'rgba(132, 250, 176, 0.2)', // #84fab0
+                    'rgba(143, 211, 244, 0.2)', // #8fd3f4
+                    'rgba(132, 250, 176, 0.4)', // 变体
+                    'rgba(143, 211, 244, 0.4)', // 变体
+                    'rgba(132, 250, 176, 0.6)'  // 变体
+                ],
+                borderColor: [
+                    'rgba(132, 250, 176, 1)', // #84fab0
+                    'rgba(143, 211, 244, 1)', // #8fd3f4
+                    'rgba(132, 250, 176, 1)', // 变体
+                    'rgba(143, 211, 244, 1)', // 变体
+                    'rgba(132, 250, 176, 1)'  // 变体
+                ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                const payment_duesCtx = document.getElementById('payment_duesBarChart').getContext('2d');
+                const payment_duesBarChart = new Chart(payment_duesCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: JSON.parse("{{puid|escapejs}}"),
+                        datasets: [{
+                            label: 'Number of Users',
+                            data: JSON.parse("{{due|escapejs}}"), // 示例数据
+                            backgroundColor: [
+                    'rgba(132, 250, 176, 0.2)', // #84fab0
+                    'rgba(143, 211, 244, 0.2)', // #8fd3f4
+                    'rgba(132, 250, 176, 0.4)', // 变体
+                    'rgba(143, 211, 244, 0.4)', // 变体
+                    'rgba(132, 250, 176, 0.6)'  // 变体
+                ],
+                borderColor: [
+                    'rgba(132, 250, 176, 1)', // #84fab0
+                    'rgba(143, 211, 244, 1)', // #8fd3f4
+                    'rgba(132, 250, 176, 1)', // 变体
+                    'rgba(143, 211, 244, 1)', // 变体
+                    'rgba(132, 250, 176, 1)'  // 变体
+                ],
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            </script>
+                
+                     
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script type="text/javascript" src="Chart.js"></script>
+
+<script type="text/javascript" src="chartjs-plugin-colorschemes.js"></script>
+</body>
+</html>
+

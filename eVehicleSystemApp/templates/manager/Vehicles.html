@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vehicles</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --aquamarine: #7fffd4; 
+        }
+        .bg-aquamarine {
+            background-color: var(--aquamarine) !important;
+        }
+        .text-aquamarine {
+            color: var(--aquamarine) !important;
+        }
+        .btn-aquamarine {
+            background-color: var(--aquamarine);
+            border-color: var(--aquamarine);
+        }
+        .btn-aquamarine:hover {
+            background-color: #5fd0b1;
+            border-color: #5fd0b1;
+        }
+        .sidebar {
+            
+            min-height: 100vh;
+            width: 200px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            padding-top: 20px; 
+        }
+        .main-content {
+            margin-left: 250px; 
+            padding-top: 56px; 
+        }
+        .navbar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            left: 200px; 
+            z-index: 1030;
+        }
+        #reportImage {
+            display: none; 
+        }
+    </style>
+</head>
+<body>
+    <!-- sidebar -->
+    <nav class="sidebar d-flex flex-column p-3 text-white shadow" style="background-image: linear-gradient(0deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; margin: 0; background-attachment: fixed; background-size: cover;">
+        <div class="position-sticky">
+            
+            
+            <a href="/manager/manager_dashboard/" class=" navbar-brand px-3 mb-3 d-flex align-items-center justify-content-center">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="bi bi-kanban" style="font-size: 1.5rem; color: rgb(255, 255, 255);" ></i>
+                </div>
+                <div class="sidebar-brand-text mx-3 fw-bold ">Dashborad</div>
+            </a>
+            <hr class="sidebar-divider">
+            <ul class="nav flex-column">
+                <ul class="nav nav-pills flex-column mb-auto">
+                    <li class="nav-item">
+                        <a href="/manager/manager_dashboard/" class="nav-link text-white " aria-current="page">
+                            <i class="bi bi-speedometer2 me-2"></i>
+                            General
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/User/" class="nav-link text-white">
+                            <i class="bi bi-people me-2"></i>
+                            User
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Location/" class="nav-link  text-white">
+                            <i class="bi bi-ev-station me-2"></i>
+                            Location
+                        </a>
+                    </li>
+                    <li>
+                        <a href="/manager/Vehicles/" class="nav-link active">
+                            <i class="bi bi-ev-front me-2"></i>
+                            Vehicles
+                        </a>
+                    </li>
+                    <!-- <li>
+                        <a href="#" class="nav-link text-white">
+                            <i class="bi bi-gear me-2"></i>
+                            Setting
+                        </a>
+                    </li> -->
+                </ul>
+                <!-- 添加更多菜单项 -->
+            </ul>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- User Info Button (offcanvas trigger) -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            Manager: {{manager_name}}
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/home/StaffLogin/">
+                            Logout
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- main -->
+    <main class="main-content">
+        <div class="container-fluid">
+            <!-- dashboard -->
+            <div class="pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Vehicles</h1>
+                <a href="/manager/Vehicle/" class="btn btn-aquamarine ">
+                    <i class="bi bi-arrow-clockwise"></i> Refresh
+                </a>
+            </div>
+
+            <div class="row d-flex align-items-stretch">
+                <!-- Left Column: Two Cards -->
+                <div class="col-md-8 d-flex flex-column">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Vehicle type count
+                        </div>
+                        <div class="card-body">
+                            <canvas id="damageBarChart" ></canvas>
+                        </div>
+                    </div>
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Vehicle Damage Count
+                        </div>
+                        <div class="card-body">
+                            <canvas id="damagecountBarChart" ></canvas>
+                        </div>
+                    </div>
+                </div>
+            
+                <!-- Right Column: Single Card -->
+                <div class="col-md-4 d-flex">
+                    <div class="card mb-4 shadow">
+                        <div class="card-header bg-aquamarine">
+                            Vehicle Damage Count by Postal Code
+                        </div>
+                        <div class="card-body ">
+                            <canvas id="stackedBarChart" ></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+            
+
+            
+                
+                
+                    
+        </div>
+    </main>
+    
+    <script>
+        window.addEventListener('resize', function() {
+                            location.reload();
+                        });
+                        
+        
+// Vehicle Damage Count Bar Chart
+const damageCtx = document.getElementById('damageBarChart').getContext('2d');
+const damageBarChart = new Chart(damageCtx, {
+    type: 'bar',
+    data: {
+        labels: JSON.parse("{{vehicle_type_count|escapejs}}"), // 示例车辆
+        datasets: [{
+            label: 'Number of Damages',
+            data: JSON.parse("{{vehicle_type_counts|escapejs}}"), // 示例数据
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+const ctx = document.getElementById('stackedBarChart').getContext('2d');
+        const stackedBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: JSON.parse("{{location|escapejs}}"), // 扩展到G12
+                datasets: [
+                    {
+                        label: 'Bike',
+                        data: JSON.parse("{{bike|escapejs}}"), // 示例数据
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Cycle',
+                        data: JSON.parse("{{cycle|escapejs}}"), // 示例数据
+                        backgroundColor: 'rgba(255, 206, 86, 0.6)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Skateboard',
+                        data: JSON.parse("{{skateboard|escapejs}}"), // 示例数据
+                        backgroundColor: 'rgba(54, 162, 235, 0.6)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    },
+                    {
+                        label: 'Delivery',
+                        data: JSON.parse("{{delivery|escapejs}}"), // 示例数据
+                        backgroundColor: 'rgba(752, 192, 192, 0.6)',
+                        borderColor: 'rgba(752, 192, 192, 1)',
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                indexAxis: 'y', // 使条形图水平
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        stacked: true // 启用堆叠
+                    },
+                    y: {
+                        stacked: true // 启用堆叠
+                    }
+                }
+            }
+        });
+        // Vehicle Damage Count Bar Chart
+const damagecountCtx = document.getElementById('damagecountBarChart').getContext('2d');
+const damagecountBarChart = new Chart(damagecountCtx, {
+    type: 'bar',
+    data: {
+        labels: JSON.parse("{{vid|escapejs}}"), // 示例车辆
+        datasets: [{
+            label: 'Number of Damages',
+            data: JSON.parse("{{damage_count|escapejs}}"), // 示例数据
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)',
+                'rgba(255, 206, 86, 0.2)',
+                'rgba(75, 192, 192, 0.2)'
+            ],
+            borderColor: [
+                'rgba(255, 99, 132, 1)',
+                'rgba(54, 162, 235, 1)',
+                'rgba(255, 206, 86, 1)',
+                'rgba(75, 192, 192, 1)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+        responsive: true,
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
+    }
+});
+
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us
+    </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+        <!-- 引入 Google Fonts -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+        
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+      </head>
+    
+</head>
+<style>
+
+body {
+           font-family: 'Afacad Flux', sans-serif; /* 应用全局字体 */
+           
+           background-image: linear-gradient(120deg, #84faafb3 0%, #8fd2f4b7 100%); /* 背景渐变 */
+           min-height: 100vh; /* 最小高度为100vh */
+           margin: 0; /* 去掉外边距 */
+           background-attachment: fixed; /* 背景固定 */
+           background-size: cover; /* 背景覆盖 */
+           
+       }
+    
+
+.our-team {
+  padding: 1.2rem 0.75rem;
+  margin-top: 5rem;
+  background: #fff;
+  border-radius: 1rem;
+  text-align: center;
+  border: 0.5px solid #83cfec;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  display: flex; /* 使用 Flexbox */
+    flex-direction: column; /* 垂直排列内容 */
+    justify-content: space-between; /* 内容之间的间距 */
+    min-height: 500px; 
+  
+}
+.our-team .pic {
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  padding: 0.75rem;
+  margin-bottom: 1.5rem;
+  transition: all 0.5s ease 0s;
+}
+.our-team:hover .pic {
+  background: linear-gradient(180deg, #84faafb3 0%, #8fd2f4b7 100%);
+  border-radius: 50%;
+}
+.pic img {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+}
+.our-team .title {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #60c5a8;
+  margin: 0 0 7px 0;
+}
+.our-team .post {
+  display: block;
+  font-size: 1rem;
+  color: #60c5a8;
+  margin-top: -1rem;
+  margin-bottom: 1rem;
+  
+}
+.our-team .glaID {
+  display: block;
+  font-size: 0.8rem;
+  color: #a8c4bc;
+  
+  
+}
+.our-team .social {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+.our-team .social li {
+  display: inline-block;
+  margin-right: 5px;
+}
+.our-team .social li a {
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  line-height: 2rem;
+  border-radius: 50%;
+  font-size: 1rem;
+  color: #60c5a8;
+  border: 1px solid #60c5a8;
+  transition: all 0.5s ease 0s;
+}
+.our-team:hover .social li a {
+  background: linear-gradient(180deg, #84faafb3 0%, #8fd2f4b7 100%);
+  color: #fff;
+}
+
+.social li a:hover {
+  background-color: #025784 !important;
+  border: none;
+  text-decoration: none;
+}
+
+@media only screen and (max-width: 992px) {
+  .our-team {
+    margin-bottom: 2rem;
+  }
+}
+
+</style>
+
+<body>
+    
+    <nav class="navbar navbar-expand-md bg-dark navebar-dark shadow fixed-top mb-5">
+        <div class="container">
+            <!--title -->
+        <a href="" class="navbar-brand" style="color: white;">
+            <i class="bi bi-github" style="font-size: 1.5rem; color: aquamarine;" >
+            </i>
+            Shared <span style="color: aquamarine;">E</span>-Vehicle System
+        </a>
+        <!--collapse button -->
+        <button class="navbar-toggler bg-success-subtle border border-success" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Tog  gle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+      <!--collapse content -->
+        <div class="collapse navbar-collapse" id="navbarNav" >
+           <ul class="navbar-nav ms-auto" >
+            <!-- <li class="nav-item">
+              <a href="/home/index/" class="nav-link text-secondary" >Home Page</a></li> -->
+            <!-- <li class="nav-item">
+              <a href="" class="nav-link text-secondary">Home Page</a></li> -->
+            <li class="nav-item">
+                <a href="/home/UserLogin/" class="nav-link text-secondary" >User Login</a></li>
+            <li class="nav-item">
+                <a href="/home/StaffLogin/" class="nav-link text-secondary">Staff Login</a></li>
+            <li class="nav-item">
+                <a href="/home/AboutUs/" class="nav-link"style="color: aquamarine;">About Us</a></li>
+           </ul>
+        </div>
+        
+        
+        
+    </div>
+    </nav>
+
+<section class="container ">
+    
+  <div class="row mt-5 ">
+    <div class="col-md-3 col-sm-6 ">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://cdn-icons-png.flaticon.com/512/146/146031.png">
+        </div>
+        <h3 class="title">Ayush Agarwal</h3>
+        <p class="glaID">3043532A</p>
+        <span class="post">Data Scientist</span>
+        <ul class="social">
+            <li><a href="#" class="bi bi-facebook"></a></li>
+            <li><a href="#" class="bi bi-twitter"></a></li>
+            <li><a href="https://www.linkedin.com/in/ayushagarwal2396/" class="bi bi-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://cdn-icons-png.flaticon.com/512/146/146029.png">
+        </div>
+        <h3 class="title">Sumeet G. Patil</h3>
+        <p class="glaID">3047051P</p>
+        <span class="post">Django Developer</span>
+        <ul class="social">
+            <li><a href="#" class="bi bi-facebook"></a></li>
+            <li><a href="#" class="bi bi-twitter"></a></li>
+            <li><a href="#" class="bi bi-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://cdn-icons-png.flaticon.com/512/146/146030.png">
+        </div>
+        <h3 class="title">Bofeng Li</h3>
+        <p class="glaID">2984272L</p>
+        <span class="post">Front End Developer</span>
+        <ul class="social">
+            <li><a href="#" class="bi bi-facebook"></a></li>
+            <li><a href="#" class="bi bi-twitter"></a></li>
+            <li><a href="#" class="bi bi-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+      <div class="our-team">
+        <div class="pic">
+          <img src="https://cdn-icons-png.flaticon.com/512/146/146037.png" width="30" height="30">
+        </div>
+        <h3 class="title">Jiazheng Yu</h3>
+        <p class="glaID">2983703Y</p>
+        <span class="post">Front End Developer</span>
+        <ul class="social">
+            <li><a href="#" class="bi bi-facebook"></a></li>
+            <li><a href="#" class="bi bi-twitter"></a></li>
+            <li><a href="#" class="bi bi-linkedin"></a></li>
+        </ul>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div class="row justify-content-center">
+    <div class="col-md-3 col-sm-6">
+        <div class="our-team">
+            <div class="pic">
+                <img src="https://cdn-icons-png.flaticon.com/512/146/146036.png" alt="Sam">
+            </div>
+            <h3 class="title">Tridisha Gogoi</h3>
+            <p class="glaID">3030899G</p>
+            <span class="post">Test Engineer</span>
+            <ul class="social">
+                <li><a href="#" class="bi bi-facebook"></a></li>
+                <li><a href="#" class="bi bi-twitter"></a></li>
+                <li><a href="#" class="bi bi-linkedin"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="our-team">
+            <div class="pic">
+                <img src="https://cdn-icons-png.flaticon.com/512/146/146032.png" alt="Question">
+            </div>
+            <h3 class="title">Xiaoqi Zhou</h3>
+            <p class="glaID">2994034Z</p>
+            <span class="post">Front-end Designer & Developer <br>
+                 </span>
+            <ul class="social">
+                <li><a href="#" class="bi bi-facebook"></a></li>
+                <li><a href="#" class="bi bi-twitter"></a></li>
+                <li><a href="#" class="bi bi-linkedin"></a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6">
+        <div class="our-team">
+            <div class="pic">
+                <img src="https://cdn-icons-png.flaticon.com/512/146/146034.png">
+            </div>
+            <h3 class="title">Yunfan Shang</h3>
+            <p class="glaID">2983452S</p>
+            <span class="post">
+                Front-end Designer & Developer
+                </span>
+            <ul class="social">
+                <li><a href="#" class="bi bi-facebook"></a></li>
+                <li><a href="#" class="bi bi-twitter"></a></li>
+                <li><a href="#" class="bi bi-linkedin"></a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+  
+  
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    
+</body>
+</html>

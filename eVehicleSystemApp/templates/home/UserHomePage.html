@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Home</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Afacad+Flux:wght@100..1000&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&display=swap" rel="stylesheet">
+
+
+    <style>
+        body {
+            font-family: 'Afacad Flux', sans-serif;
+        }
+
+        /* Right-side User Info Modal */
+        .offcanvas {
+            width: 300px;
+            background-color: #343a40;
+            color: white;
+        }
+
+        .offcanvas-header {
+            background-color: #495057;
+        }
+
+        .offcanvas-body {
+            padding: 20px;
+        }
+        /* HI*/
+
+        /* Right-side User Info Modal */
+        .offcanvas-title {
+            font-size: 1.8rem;  
+            font-weight: bold;  
+        }
+
+        /* Modal for Payment */
+        .modal-content {
+            background-color: #f8f9fa;
+        }
+
+        /* Main content */
+        .main-content {
+            margin-left: 0;
+            padding: 20px;
+        }
+
+        /* Google Map */
+        #map {
+            height: 500px;
+            width: 100%;
+            background-color: grey;
+        }
+
+        /* Buttons */
+        .bottom-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-custom {
+            margin: 10px;
+        }
+
+        .home-title {
+            font-weight: 500;
+        }
+
+        .special-title {
+            font-family: 'Caveat', sans-serif;
+            font-size: 2rem;
+        }
+        
+        .btn-custom {
+            border: 2px solid #5fd0b1;  
+            background-color: #5fd0b1;  
+            color: white; 
+            font-size: 1.5rem;  
+        }
+
+        .btn-custom:hover {
+            background-color: white;  
+            color: #5fd0b1;  
+            border-color: #5fd0b1;  
+        }
+
+        /* Customize select elements */
+        .custom-select {
+            width: 350px; 
+        }
+
+        /* Customize submit button */
+        .btn-submit {
+            width: 250px; 
+        }
+        /* Visually hidden but still accessible */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            margin: -1px;
+            padding: 0;
+            border: 0;
+            clip: rect(0, 0, 0, 0);
+            overflow: hidden;
+        }
+
+
+    </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a href="#" class="navbar-brand" style="color: white;">
+            <i class="bi bi-github" style="font-size: 1.5rem; color: aquamarine;" >
+            </i>
+            Shared <span style="color: aquamarine;">E</span>-Vehicle System
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <!-- User Info Button (offcanvas trigger) -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        User: {{c_name}}
+                    </a>
+                </li>
+                <li class="nav-item"></li>
+                    <a class="nav-link" href="#">
+                        Amount due : {{due_amount}}
+                    </a>
+                </li>
+                <li class="nav-item"></li>
+                    <a class="nav-link" href="/home/Settings/">
+                        Setting
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/home/UserLogin/">
+                        Logout
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Offcanvas 
+<div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasUserInfo" aria-labelledby="offcanvasUserInfoLabel">
+    <div class="offcanvas-header" style="background-color: rgba(162, 249, 242, 0.84);">
+        <h5 class="offcanvas-title" id="offcanvasUserInfoLabel">User Information</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+
+    <div class="offcanvas-body" style="background-color: white;">
+        <p style="color: black;">Username: {{c_name}}</p>
+        
+        <button class="btn btn-aquamarine w-100 mb-2" style="font-size: 1.5rem;background-color: #5fd0b1; border-color: #5fd0b1;" data-bs-toggle="modal" data-bs-target="#paymentModal">
+            Payment
+        </button>
+
+        
+        <button name="report_defective" class="btn btn-aquamarine w-100 mb-2" style="font-size: 1.5rem; background-color: #5fd0b1; border-color: #5fd0b1;" data-bs-toggle="modal" data-bs-target="#reportModal">
+            Report defective
+        </button>
+
+        
+        <button class="btn btn-aquamarine w-100" style="font-size: 1.5rem; background-color: #5fd0b1; border-color: #5fd0b1;">
+            Settings
+        </button>
+    </div>
+</div> -->
+
+
+
+
+<!-- Payment Modal  -->
+<div class="modal fade" id="paymentModal" tabindex="-1" aria-labelledby="paymentModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="paymentModalLabel">Payment Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Vehicle: E-Bike</p>
+                <p>Type: Electric</p>
+                <p>Distance: 15 km</p>
+                <p>Time: 45 minutes</p>
+                <h5>Total: £20.00</h5>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success">Pay Now</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Report Modal  -->
+<div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="reportModalLabel">Report an Issue</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <p style="font-size: 1.2rem;">Are you sure you want to report an issue?</p>
+                <p>We will take care of it!</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmReport">Confirm</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    document.getElementById('confirmReport').addEventListener('click', function() {
+      
+        alert('Your issue has been reported. Thank you!');
+   
+        var reportModal = bootstrap.Modal.getInstance(document.getElementById('reportModal'));
+        reportModal.hide();
+    });
+</script>
+
+
+<!-- Main content -->
+<section class="p-5" style="background-image: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); min-height: 100vh; background-attachment: fixed; background-size: cover;">
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center align-items-center p-4">
+            <h1 class="text-center text-white display-2 home-title">
+                Welcome to the Shared E-Vehicle System
+            </h1>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4G2iXDB4tbJeKMWnvIv_h-POYTEwYKf0&language=en&callback=initMap" async defer></script>
+            <!-- Location and Vehicle Selection Form -->
+            <form method="POST" action="/home/UserHomePage/">
+                {% csrf_token %}
+                <div class="row mb-4">
+                    <div class="col-md-5 mb-3">
+                        <label for="location" class="form-label">Select Location</label>
+                        <select name="location" class="form-select custom-select" id="location" onchange="updateMap()">
+                            <option selected>Select a postal code</option>
+                            <option value="G1">G1 - Glasgow City Centre - Merchant City</option>
+                            <option value="G2">G2 - Glasgow City Centre - Financial District</option>
+                            <option value="G3">G3 - Charing Cross, Anderston, Finnieston, Yorkhill</option>
+                            <option value="G4">G4 - Glasgow Cathedral, Townhead, Cowcaddens</option>
+                            <option value="G11">G11 - Partick, Thornwood</option>
+                            <option value="G12">G12 - Hillhead, Dowanhill, University of Glasgow</option>
+                            <option value="G13">G13 - Anniesland, Jordanhill</option>
+                            <option value="G14">G14 - Whiteinch, Scotstoun</option>
+                            <option value="G20">G20 - Maryhill, North Kelvinside</option>
+                            <option value="G41">G41 - Pollokshields, Strathbungo, Shawlands</option>
+                            <option value="G42">G42 - Govanhill, Battlefield</option>
+                            <option value="G43">G43 - Pollokshaws, Auldhouse</option>
+                            <option value="G44">G44 - Cathcart, Mount Florida</option>
+                            <option value="G51">G51 - Govan, Ibrox</option>
+                            <option value="G52">G52 - Cardonald, Hillington</option>
+                            <option value="G31">G31 - Dennistoun, Haghill</option>
+                            <option value="G32">G32 - Carmyle, Mount Vernon</option>
+                            <option value="G40">G40 - Bridgeton, Dalmarnock</option>
+                            <option value="G21">G21 - Springburn, Sighthill</option>
+                            <option value="G22">G22 - Possilpark, Parkhouse</option>
+                            <option value="G61">G61 - Bearsden</option>
+                            <option value="G62">G62 - Milngavie</option>
+                            <option value="G64">G64 - Bishopbriggs</option>
+                            <option value="G71">G71 - Uddingston</option>
+                            <option value="G72">G72 - Cambuslang</option>
+                            <option value="G73">G73 - Rutherglen</option>
+                            <option value="G74">G74 - East Kilbride</option>
+                            <option value="G76">G76 - Clarkston, Busby</option>
+                        </select>
+                    </div>
+                    <div class="col-md-5 mb-3">
+                        <label for="vehicle-type" class="form-label">Select Vehicle Type</label>
+                        <select name='vehicle-type' class="form-select custom-select" id="vehicle-type">
+                            <option selected>Select a vehicle type</option>
+                            <option value="bike">bike</option>
+                            <option value="cycle">cycle</option>
+                            <option value="skateboard">skateboard</option>
+                            <option value="delivery">delivery</option>
+                    
+
+                        </select>
+                    </div>
+                    <div class="col-md-2 mb-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-primary btn-submit w-100 border border-dark">Submit</button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Google Map container -->
+            <h3 class="text-center text-white mt-3">Google Map</h3>
+            <div id="map"></div>
+
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4G2iXDB4tbJeKMWnvIv_h-POYTEwYKf0&language=en&callback=initMap" async defer></script>
+            <script>
+                let map; 
+            
+                const postalCodes = {
+                    'G1': { lat: 55.860916, lng: -4.251433 },
+                    'G2': { lat: 55.862532, lng: -4.257046 },
+                    'G3': { lat: 55.864396, lng: -4.272841 },
+                    'G4': { lat: 55.871303, lng: -4.246467 },
+                    'G11': { lat: 55.873003, lng: -4.305671 },
+                    'G12': { lat: 55.878731, lng: -4.293687 },
+                    'G13': { lat: 55.890822, lng: -4.330454 },
+                    'G14': { lat: 55.885328, lng: -4.349648 },
+                    'G20': { lat: 55.877397, lng: -4.276842 },
+                    'G41': { lat: 55.843035, lng: -4.274445 },
+                    'G42': { lat: 55.836015, lng: -4.253450 },
+                    'G43': { lat: 55.823421, lng: -4.274779 },
+                    'G44': { lat: 55.817643, lng: -4.257472 },
+                    'G51': { lat: 55.853799, lng: -4.309527 },
+                    'G52': { lat: 55.849526, lng: -4.360856 },
+                    'G31': { lat: 55.860049, lng: -4.204865 },
+                    'G32': { lat: 55.838268, lng: -4.167230 },
+                    'G40': { lat: 55.847492, lng: -4.224459 },
+                    'G21': { lat: 55.879624, lng: -4.230680 },
+                    'G22': { lat: 55.891524, lng: -4.252442 },
+                    'G61': { lat: 55.920658, lng: -4.334500 },
+                    'G62': { lat: 55.940483, lng: -4.318555 },
+                    'G64': { lat: 55.906065, lng: -4.217868 },
+                    'G71': { lat: 55.819936, lng: -4.078516 },
+                    'G72': { lat: 55.819375, lng: -4.149623 },
+                    'G73': { lat: 55.826499, lng: -4.202164 },
+                    'G74': { lat: 55.764101, lng: -4.177452 },
+                    'G76': { lat: 55.779437, lng: -4.277718 },
+                };
+
+                function initMap() {
+                   
+                    map = new google.maps.Map(document.getElementById("map"), {
+                        center: postalCodes['G1'], 
+                        zoom: 12,
+                    });
+                    console.log("Map initialized");
+                }
+
+                function updateMap() {
+                    
+                    const locationSelect = document.getElementById("location");
+                    const selectedValue = locationSelect.value;
+                    console.log("Selected value:", selectedValue);
+                 
+                    if (selectedValue in postalCodes) {
+                       
+                        map.setCenter(postalCodes[selectedValue]);
+                        map.setZoom(15);
+                    }
+                    else{
+                        console.log("Invalid postal code selected");
+                    }
+                }
+            </script>
+            
+            <div>
+            </br>
+                {{vehicle_availability}}
+                <!-- <label name='rvehicle_id' value="{{rvehicle_id}}" for="rvehicle_id" class="visually-hidden">{{rvehicle_id}}</label> -->
+                <!-- {{rvehicle_id}} is on rent -->
+                <!-- <p>{{bvehicle_id}} is added to billing, kindly clear the due amount of {{due}}</p>    -->
+            </div>
+            <!-- Bottom buttons -->
+            <form method="POST" action="/home/UserHomePage/">
+                {% csrf_token %}
+                <div class="bottom-buttons">
+                    <button name="user_choice" value="rent" type="submit" class="btn btn-success btn-lg btn-custom" onclick="ridecheck()">Rent</button><br>
+                    <br>
+                    To buy the vehicle pay {{price}}
+                    <button name="user_choice" value="buy" type="submit" class="btn btn-success btn-lg btn-custom" onclick="buy()">Buy</button><br>
+                    <div class="col-md-5 mb-3"></div>
+                        <label for="rlocation" class="form-label">Select Location to return the vehicle</label>
+                        <select name="rlocation" class="form-select custom-select" id="rlocation" onchange="updateMap()">
+                            <option selected>Select a postal code</option>
+                            <option value="G1">G1 - Glasgow City Centre - Merchant City</option>
+                            <option value="G2">G2 - Glasgow City Centre - Financial District</option>
+                            <option value="G3">G3 - Charing Cross, Anderston, Finnieston, Yorkhill</option>
+                            <option value="G4">G4 - Glasgow Cathedral, Townhead, Cowcaddens</option>
+                            <option value="G11">G11 - Partick, Thornwood</option>
+                            <option value="G12">G12 - Hillhead, Dowanhill, University of Glasgow</option>
+                            <option value="G13">G13 - Anniesland, Jordanhill</option>
+                            <option value="G14">G14 - Whiteinch, Scotstoun</option>
+                            <option value="G20">G20 - Maryhill, North Kelvinside</option>
+                            <option value="G41">G41 - Pollokshields, Strathbungo, Shawlands</option>
+                            <option value="G42">G42 - Govanhill, Battlefield</option>
+                            <option value="G43">G43 - Pollokshaws, Auldhouse</option>
+                            <option value="G44">G44 - Cathcart, Mount Florida</option>
+                            <option value="G51">G51 - Govan, Ibrox</option>
+                            <option value="G52">G52 - Cardonald, Hillington</option>
+                            <option value="G31">G31 - Dennistoun, Haghill</option>
+                            <option value="G32">G32 - Carmyle, Mount Vernon</option>
+                            <option value="G40">G40 - Bridgeton, Dalmarnock</option>
+                            <option value="G21">G21 - Springburn, Sighthill</option>
+                            <option value="G22">G22 - Possilpark, Parkhouse</option>
+                            <option value="G61">G61 - Bearsden</option>
+                            <option value="G62">G62 - Milngavie</option>
+                            <option value="G64">G64 - Bishopbriggs</option>
+                            <option value="G71">G71 - Uddingston</option>
+                            <option value="G72">G72 - Cambuslang</option>
+                            <option value="G73">G73 - Rutherglen</option>
+                            <option value="G74">G74 - East Kilbride</option>
+                            <option value="G76">G76 - Clarkston, Busby</option>
+                        </select>
+                    </div>
+                    <div>
+                    <button name="user_choice" value="return" type="submit" class="btn btn-success btn-lg btn-custom">Return</button>
+                    <button name="report_defective" value="report_defective" type="submit" class="btn btn-success btn-lg btn-custom">Report defective</button>
+                    </div>
+                    <div>
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Paypal_2014_logo.png" width="60" height="60" >
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" width="80" height="60">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" width="60" height="40" >
+                        <!-- <label for="due_amount" class="form-label">Amount due : {{due_amount}}</label> -->
+                        <button name="due_amount" value="due_amount" type="submit" class="btn btn-success btn-lg btn-custom" onclick="pay()">Click to Pay</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    function ridecheck(){
+        //const inputData = document.getElementsByName("rvehicle_id");
+        alert("VEHICLE RENTED SUCCESSFULLY!!!");
+    }
+    function buy(){
+        alert("VEHICLE ADDED TO BILLING!!! KINDLY CLEAR THE DUE. THANKYOU.");
+    }
+
+    function pay(){
+        alert("PAYMENT SUCCESS!!!");
+    }
+</script>
