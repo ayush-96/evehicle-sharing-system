@@ -89,5 +89,4 @@ Operator Dashboard: Accessible by operators to view and manage vehicle condition
 Manager Dashboard: Allows managers to generate and view reports on the system's performance.
 
 Contact and Support
-For any queries or support, please reach out to the development team. Lab 02-05 Programming and Systems Development
-3043532A@student.gla.ac.uk
+For any queries or support, please reach out to the development team. Me!
