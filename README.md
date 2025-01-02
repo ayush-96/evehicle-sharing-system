@@ -1,4 +1,8 @@
 README - eVehicleSystem
+
+The app is up and active on : http://eternaltechlearner.com/
+* TO DO - multiple fixes and improvements
+
 Project Overview
 The eVehicleSystem is an electric vehicle share program implemented as a web application using the Django framework, with a front-end built using Bootstrap. This system allows customers to rent and return electric vehicles (such as scooters and bikes), pay for their rentals, report defects, and perform other tasks. Operators can track, charge, repair, and manage vehicles, while managers can view reports on system activity. The database is implemented using PostgreSQL.
 
